@@ -4,49 +4,35 @@ using UnityEngine;
 
 public class Clone : MonoBehaviour
 {
-    private GameObject target;
+    GameObject[] targets;
+    public GameObject targetPrefab;
     // Start is called before the first frame update
     void Start()
     {
+        targets = GameObject.FindGameObjectsWithTag("MainTarget");
 
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.z > 0.5) //Clone will delete itself after it goes above the limit z-axis
+        targets = GameObject.FindGameObjectsWithTag("MainTarget");
+         
+        if(targets.Length < 21)
         {
-            Destroy(gameObject);
+            StartCoroutine("SpawnTarget");
+            //clone another in any x and y axis
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    IEnumerator SpawnTarget()
     {
-        if (other.gameObject.tag == "Target1")
-        {
-            Destroy(gameObject); 
-            //target.SetActive(false);
-            Debug.Log("1 Point");
-        }
-        else if (other.gameObject.tag == "Target2")
-        {
-            Destroy(gameObject);
-            Debug.Log("2 Point");
-        }
-        else if (other.gameObject.tag == "Target3")
-        {
-            Destroy(gameObject);
-            Debug.Log("3 Point");
-        }
-        else if (other.gameObject.tag == "Target4")
-        {
-            Destroy(gameObject);
-            Debug.Log("5 Point");
-        }
-        else if (other.gameObject.tag == "Target5")
-        {
-            Destroy(gameObject);
-            Debug.Log("10 Point");
-        }
+        yield return new WaitForSeconds(3);
+        var theTargets = GameObject.Find("The Targets");
+            Debug.Log(targets.Length);
+            Debug.Log("Cloned");
+            var tmp = Instantiate(targetPrefab, new Vector3(Random.Range(-19, -2), transform.position.y, Random.Range(-5, 6)), targetPrefab.transform.rotation);
+            tmp.transform.SetParent(theTargets.transform);
     }
 }

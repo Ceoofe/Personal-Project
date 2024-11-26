@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody bullet;
+    public GameObject bullet;
     public float speed = 5.0f;
     private float horizontalInput;
     private int xMax = 10;
@@ -32,9 +32,8 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Rigidbody clone;
-            clone = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1), bullet.transform.rotation);
-            clone.velocity = transform.TransformDirection(Vector3.forward * 10);
+
+            Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1), bullet.transform.rotation);
             Debug.Log("Shoot");
         }
     }
