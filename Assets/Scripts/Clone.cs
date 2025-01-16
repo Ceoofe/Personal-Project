@@ -6,33 +6,52 @@ public class Clone : MonoBehaviour
 {
     GameObject[] targets;
     public GameObject targetPrefab;
+    bool canSpawn;
+    public static int points;
     // Start is called before the first frame update
     void Start()
     {
         targets = GameObject.FindGameObjectsWithTag("MainTarget");
-
-       
+        InvokeRepeating("CheckTargets", 1, .5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        targets = GameObject.FindGameObjectsWithTag("MainTarget");
          
         if(targets.Length < 21)
         {
-            StartCoroutine("SpawnTarget");
+            canSpawn = true;
             //clone another in any x and y axis
-        }
-    }
+            PlayerController playerController = FindObjectOfType<PlayerController>();
+            if (playerController != null)
+            {
+                // Debug.Log("Points:" + points);
+               // playerController.points
 
-    IEnumerator SpawnTarget()
-    {
-        yield return new WaitForSeconds(3);
-        var theTargets = GameObject.Find("The Targets");
+            }
+        }
+        if (canSpawn)
+        {
+            targets = GameObject.FindGameObjectsWithTag("MainTarget");
+            if(targets.Length > 21)
+            {
+                canSpawn = false;
+                return;
+            }
+            var theTargets = GameObject.Find("The Targets");
             Debug.Log(targets.Length);
             Debug.Log("Cloned");
-            var tmp = Instantiate(targetPrefab, new Vector3(Random.Range(-19, -2), transform.position.y, Random.Range(-5, 6)), targetPrefab.transform.rotation);
+            var tmp = Instantiate(targetPrefab, new Vector3(Random.Range(-10, 10), Random.Range(1.2f, 2), Random.Range(0, -15)), targetPrefab.transform.rotation);
             tmp.transform.SetParent(theTargets.transform);
+
+        }
+
+
+    }
+
+    void CheckTargets()
+    {
+        targets = GameObject.FindGameObjectsWithTag("MainTarget");
     }
 }

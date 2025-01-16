@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Destroy : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Destroy : MonoBehaviour
         if (transform.position.z > 0.5) //Clone will delete itself after it goes above the limit z-axis
         {
             Destroy(gameObject);
+            Debug.Log("Lose 3 Point");
+            Clone.points-= 3;
         }
     }
 
@@ -27,31 +30,36 @@ public class Destroy : MonoBehaviour
         {
             Destroy(gameObject); 
             Destroy(other.gameObject.transform.parent.gameObject);
-            Debug.Log("1 Point");
+            //Debug.Log("1 Point");
+            Clone.points++;
         }
         else if (other.gameObject.tag == "Target2")
         {
             Destroy(gameObject);
             Destroy(other.gameObject.transform.parent.gameObject);
-            Debug.Log("2 Point");
+           // Debug.Log("2 Point");
+            Clone.points+= 2;
         }
         else if (other.gameObject.tag == "Target3")
         {
             Destroy(gameObject);
             Destroy(other.gameObject.transform.parent.gameObject);
-            Debug.Log("3 Point");
+            //Debug.Log("3 Point");
+            Clone.points+= 3;
         }
         else if (other.gameObject.tag == "Target4")
         {
             Destroy(gameObject);
             Destroy(other.gameObject.transform.parent.gameObject);
-            Debug.Log("5 Point");
+            //Debug.Log("5 Point");
+            Clone.points+= 4;
         }
         else if (other.gameObject.tag == "Target5")
         {
             Destroy(gameObject);
             Destroy(other.gameObject.transform.parent.gameObject);
-            Debug.Log("10 Point");
+           // Debug.Log("10 Point");
+           Clone.points+= 5;
         }
     }
 }
