@@ -10,7 +10,7 @@ public class CameraPlayer : MonoBehaviour
     Quaternion cam;
     int xMin = -10;
     int xMax = 9;
-    Vector3 worldPosition;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,27 +20,23 @@ public class CameraPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hitData;
+        var mousePos = Input.mousePosition;
+        mousePos.z = 2.0f;
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        if(Physics.Raycast(ray, out hitData, 1000))
-            {
-                worldPosition = hitData.point;
-            }
-
-        Debug.Log(worldPosition.y);
+        Debug.Log(mousePos.y);
 
 
         cam.x += Input.GetAxis("Mouse Y") * speed;
         cam.x = Mathf.Clamp(cam.x, xMin, xMax);
 
-        transform.localRotation = Quaternion.Euler(cam.x, cam.y, cam.z);
-        plr.transform.localRotation = Quaternion.Euler(cam.x, cam.y, cam.z);
+        // transform.localRotation = Quaternion.Euler(cam.x, cam.y, cam.z);
+        // plr.transform.localRotation = Quaternion.Euler(cam.x, cam.y, cam.z);
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
 
-            Instantiate(bullet, new Vector3(transform.position.x, worldPosition.y, transform.position.z + 1), bullet.transform.rotation);
+            Instantiate(bullet, new Vector3(transform.position.x, mousePos.y, transform.position.z + 1), bullet.transform.rotation);
             
             //Debug.Log("Shoot");
         }

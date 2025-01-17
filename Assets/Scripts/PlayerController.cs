@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+       // Cursor.lockState = CursorLockMode.Locked;
+        StartCoroutine(Timer());
     }
 
     // Update is called once per frame
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
         if(Clone.points < 0)
         {
             Debug.Log("Game Over!");
+            
         }
 
         horizontalInput = Input.GetAxis("Horizontal");
@@ -40,9 +42,14 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(xMin, transform.position.y, transform.position.z);
         }
     }
+
+    IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(180);
+        Debug.Log("Time's Over!");
+    }
 }
 // Set a timer abt 10 seconds for each targets and if the player doesnt hit them in time they lose 1 point
-// Time limit is abt 3 mins for the whole game/Make the timer decrease from 10 seconds to 8,7,6,5...
 // Make sure bullet spawn directly at the camera
 
 // Add sounds and music
